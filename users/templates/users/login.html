@@ -1,0 +1,17 @@
+{% extends "users/base.html" %}
+{% block content %}
+    <h1>Login page</h1>
+    {% if message %}
+        <h2>{{ message }}</h2>
+    {% endif %}
+    <form id="form" method="POST">
+        {% csrf_token %}
+        <input name="username" type="text"/>
+        <input name="password" type="password"/>
+        <button id="submit-login">Log in</button>
+        <!-- <fieldset>
+            {{ form }}
+        </fieldset> -->
+    </form>
+    <a href="{% url 'register' %}">Don't have an account? Click here to create an account</a>
+{% endblock content %}

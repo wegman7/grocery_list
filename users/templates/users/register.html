@@ -1,0 +1,11 @@
+{% extends "users/base.html" %}
+{% block content %}
+    <a>Register page</a>
+    <form id="form" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            {{ form }}
+        </fieldset>
+    </form>
+    <button onclick="sub()">Submit</button>
+{% endblock content %}
