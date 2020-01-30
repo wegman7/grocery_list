@@ -96,3 +96,4 @@ function onDOMContentLoaded() {
     // initialize add item button to false, this is used so that users can only press 'Add item' once
     let add_item = true;
 }
+// commit test
