@@ -1,3 +1,4 @@
+console.log('test');
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
 
 function onDOMContentLoaded() {
@@ -50,11 +51,12 @@ function onDOMContentLoaded() {
                 let form = document.getElementById('new-item-form');
                 for (let i = 0; i < boxes.length; i++) {
                     clone = boxes[i].cloneNode(true);
-                    // clone.setAttribute('type', 'hidden');
+                    clone.setAttribute('type', 'hidden');
                     // clone.type = 'hidden';
                     form.append(clone);
                 }
                 console.log(form);
+                console.log("hello");
                 
                 // create submit button for text field
                 const delete_items_button = document.createElement("button");
