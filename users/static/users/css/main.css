@@ -1,3 +1,37 @@
-div {
+.blue-background {
     color: rgba(7, 0, 112, 0.719);
+    background-color: lightskyblue;
 }
+
+.navbar-grid {
+    background-color: green;
+    display: grid;
+    padding: 20px;
+    grid-row-gap: 10px;
+    grid-column-gap: 100px;
+    grid-template-columns: 300px auto;
+}
+
+
+.navbar-grid-left {
+    background-color: orange;
+    display: grid;
+    padding: 10px;
+    grid-column-gap: 10px;
+    grid-template-columns: 100px 100px;
+    text-align: center;
+}
+
+.navbar-grid-right {
+    background-color: orange;
+    padding: 10px;
+    text-align: center;
+    justify-self: end;
+}
+
+
+/* .navbar-grid-item {
+    background-color: orange;
+    padding: 10px;
+    text-align: center;
+} */

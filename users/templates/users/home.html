@@ -1,8 +1,4 @@
 {% extends "users/base.html" %}
 {% block content %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'list' %}">List</a>
-    {% else %}
-        <h1>Welcome to the grocery list app!</h1>
-    {% endif %}
+    <h1 class="blue-background">Welcome to the grocery list app!</h1>
 {% endblock content %}
