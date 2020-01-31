@@ -57,7 +57,11 @@ def list_view(request):
     context = {
         'items': List.objects.filter(user=request.user),
     }
-    if request.method == 'POST' and request.POST.get('added-text') is not None:
+    # 
+    if request.method == 'POST' and request.POST.get('cancel'):
+        print('true')
+        pass
+    elif request.method == 'POST' and request.POST.get('added-text') is not None:
         print(request.POST)
         new_list_item = request.POST.get('added-text')
         if len(new_list_item) > 0:
@@ -65,8 +69,7 @@ def list_view(request):
             new_list_item.save()
         else:
             messages.error(request, "Invalid item")
-    # elif request.method == 'POST' and request.POST.get('delete-items-list') is not None:
-    elif request.method == 'POST':
+    else:
         print(request.POST)
         delete_list = []
         for item in List.objects.all():

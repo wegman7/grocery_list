@@ -1,72 +1,60 @@
-console.log('test');
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
 
 function onDOMContentLoaded() {
 
+    // addes submit and cancel, and removes add item and delete item buttons
+    function addSubmitAndCancel() {
+        // create submit button
+        const submit_button = document.createElement("button");
+        submit_button.setAttribute("id", "submit");
+        submit_button.innerHTML = 'submit';
+        document.getElementById('new-item-form').append(submit_button);
+
+        // remove add items button when the delete items button is clicked
+        let add_text_button = document.getElementById("add-text-button");
+        add_text_button.parentNode.removeChild(add_text_button);
+
+        // also remove the delete items button, because we will add a submit button to our form
+        let delete_items_button = document.getElementById("delete-items-button");
+        delete_items_button.parentNode.removeChild(delete_items_button);
+
+        let cancel_button = document.createElement("button");
+        cancel_button.id = "cancel";
+        cancel_button.name = "cancel";
+        cancel_button.innerHTML = "cancel";
+        cancel_button.value = "true";
+        document.getElementById("new-item-form").append(cancel_button);
+    }
+
     // adds item to grocery list
     function addText() {
-        if (add_item) {
-            // create text field
-            const text_field = document.createElement("input");
-            text_field.setAttribute("type", "text");
-            text_field.setAttribute("name", "added-text");
+        // create text field
+        const text_field = document.createElement("input");
+        text_field.setAttribute("type", "text");
+        text_field.setAttribute("name", "added-text");
 
-            // create submit button for text field
-            const submit_text = document.createElement("button");
-            submit_text.setAttribute("id", "submit-text");
-            submit_text.innerHTML = 'submit';
+        // add text field and submit button to html
+        document.getElementById('new-item-form').append(text_field);
+        console.log('in the addText function');
 
-            // add text field and submit button to html
-            document.getElementById('new-item-form').append(text_field, submit_text);
-            console.log('in the addText function');
-        }
-        add_item = false;
+        addSubmitAndCancel();
     }
 
     // adds delete boxes for items in grocery list the first time button is pressed, then deletes them the second time it's pressed
     function deleteItems() {
+        // when we press delete items, check boxes are added
+        let list = document.getElementById('grocery-list').getElementsByTagName('li');
 
-        // the first time we press delete items check boxes are added
-        if (delete_boxes()) {
-            let list = document.getElementById('grocery-list').getElementsByTagName('li');
+        for (var i = 0, len = list.length; i < len; i++) {
+            // create check box for every item in our list
+            let delete_box = document.createElement("input");
+            delete_box.setAttribute("type", "checkbox");
+            // we name our checkbox with its corresponding item name
+            delete_box.setAttribute("name", list[i].innerHTML);
 
-            for (var i = 0, len = list.length; i < len; i++) {
-                // create check box for every item in our list
-                delete_box = document.createElement("input");
-                delete_box.setAttribute("type", "checkbox");
-                // we name our checkbox with its corresponding item name
-                delete_box.setAttribute("name", list[i].innerHTML);
-
-                list[i].append(delete_box);
-            }
+            list[i].append(delete_box);
         }
-        // the second time the delete items button is pressed the items checked are deleted
-        else {
-            // if (confirm('Are you sure you want to delete checked items?')) {
-            if (true) {
-                // create list of boxes for each of our list items
-                let boxes = document.getElementById('grocery-list').getElementsByTagName('input');
-
-                // we need to append our list to our form tag to grab the post data in our views.py
-                let form = document.getElementById('new-item-form');
-                for (let i = 0; i < boxes.length; i++) {
-                    clone = boxes[i].cloneNode(true);
-                    clone.setAttribute('type', 'hidden');
-                    // clone.type = 'hidden';
-                    form.append(clone);
-                }
-                console.log(form);
-                console.log("hello");
-                
-                // create submit button for text field
-                const delete_items_button = document.createElement("button");
-                delete_items_button.setAttribute("id", "submit-deleted-items");
-                delete_items_button.setAttribute("type", "submit");
-                delete_items_button.innerHTML = 'submit';
-                document.getElementById('new-item-form').append(delete_items_button);
-            }
-
-        }
+        addSubmitAndCancel();
     }
 
     // closure that reverses bool value
@@ -83,19 +71,12 @@ function onDOMContentLoaded() {
     }
 
     // button for adding item text to grocery list
-    if (document.getElementById('add-text') != null) {
-        document.getElementById('add-text').onclick = addText;
+    if (document.getElementById('add-text-button') != null) {
+        document.getElementById('add-text-button').onclick = addText;
     }
 
     // button for adding delete boxes of items in grocery list
-    if (document.getElementById('delete-items') != null) {
-        document.getElementById('delete-items').onclick = deleteItems;
+    if (document.getElementById('delete-items-button') != null) {
+        document.getElementById('delete-items-button').onclick = deleteItems;
     }
-
-    // initialize delete_boxes to false
-    let delete_boxes = reverseBool();
-
-    // initialize add item button to false, this is used so that users can only press 'Add item' once
-    let add_item = true;
 }
-// commit test
