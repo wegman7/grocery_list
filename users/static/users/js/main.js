@@ -7,6 +7,10 @@ function onDOMContentLoaded() {
         // create submit button
         const submit_button = document.createElement("button");
         submit_button.setAttribute("id", "submit");
+        submit_button.className = "btn";
+        // add danger styling to submit button only when deleting items
+        if (document.getElementsByName("added-text").length == 0) { submit_button.className = submit_button.className.concat(" btn-danger"); }
+        else { submit_button.className = submit_button.className.concat(" btn-dark"); }
         submit_button.innerHTML = 'submit';
         document.getElementById('new-item-form').append(submit_button);
 
@@ -18,9 +22,11 @@ function onDOMContentLoaded() {
         let delete_items_button = document.getElementById("delete-items-button");
         delete_items_button.parentNode.removeChild(delete_items_button);
 
+        // create cancel button
         let cancel_button = document.createElement("button");
         cancel_button.id = "cancel";
         cancel_button.name = "cancel";
+        cancel_button.className = "btn btn-dark";
         cancel_button.innerHTML = "cancel";
         cancel_button.value = "true";
         document.getElementById("new-item-form").append(cancel_button);
@@ -32,10 +38,10 @@ function onDOMContentLoaded() {
         const text_field = document.createElement("input");
         text_field.setAttribute("type", "text");
         text_field.setAttribute("name", "added-text");
+        text_field.className = "form-control";
 
         // add text field and submit button to html
         document.getElementById('new-item-form').append(text_field);
-        console.log('in the addText function');
 
         addSubmitAndCancel();
     }
@@ -52,7 +58,8 @@ function onDOMContentLoaded() {
             // we name our checkbox with its corresponding item name
             delete_box.setAttribute("name", list[i].innerHTML);
 
-            list[i].append(delete_box);
+            list[i].prepend(' ');
+            list[i].prepend(delete_box);
         }
         addSubmitAndCancel();
     }

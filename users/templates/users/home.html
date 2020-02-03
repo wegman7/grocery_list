@@ -1,5 +1,10 @@
 {% extends "users/base.html" %}
 {% block content %}
-    <h1 class="mt-5 ml-5 pt-4">Welcome to the grocery list app!</h1>
-    <p class="ml-5">Click <a href="{% url 'register' %}">here </a>to get started.</p>
+    {% if not user.is_authenticated %}
+        <h1 class="home-title col-8">Welcome to the grocery list app!</h1>
+        <p class="col-8">Click <a href="{% url 'register' %}">here </a>to get started.</p>
+    {% else %}
+        <h1 class="col-8">Grocery list app!</h1>
+        <p class="col-8">Click <a href="{% url 'list' %}">here </a>for list.</p>
+    {% endif %}
 {% endblock content %}

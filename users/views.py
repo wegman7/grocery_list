@@ -59,6 +59,7 @@ def list_view(request):
     }
     # if cancel button is pressed on page, page is reloaded
     if request.method == 'POST' and request.POST.get('cancel'):
+        print(request.POST)
         print('true')
         pass
     # item is added
