@@ -1,7 +1,7 @@
 {% extends 'users/base.html' %}
 {% block content %}
     <div class="col-sm-6">
-    <h2>Grocery List:</h2>
+        <h2>Grocery List:</h2>
         <form id="new-item-form" method="post">
             {% csrf_token %}
             {% if items %}
