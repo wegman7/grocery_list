@@ -1,13 +1,30 @@
 {% extends "users/base.html" %}
 {% block content %}
     <div>
-        <a>Register page</a>
-        <form id="form" method="POST">
+        <h2>Register</h2>
+        <form class="mt-4" id="form" method="POST">
             {% csrf_token %}
-            <fieldset>
-                {{ form }}
-            </fieldset>
+            <!-- <fieldset> -->
+            <!-- <div>{{ form }}</div> -->
+            <div class="col-2 pl-0">
+                Username:
+                <div class="col-3 pl-0">{{ form.username }}</div>
+            </div>
+            <div class="col-2 pl-0 mt-2">
+                Password:
+                <div class="col-3 pl-0">{{ form.password1 }}</div>
+            </div>
+            <div class="col-2 pl-0 mt-2">
+                Confirm password:
+                <div class="col-3 pl-0">{{ form.password2 }}</div>
+            </div>
+            <!-- <div class="d-flex flex-row">
+                <div class="col-1">Password:</div>
+                <div class="col-3">{{ form.password1 }}</div>
+                <div class="col-2">Confirm password:</div>
+                <div class="col-1">{{ form.password2 }}</div>
+            </div> -->
+            <button class="mt-2 btn btn-dark">Submit</button>
         </form>
-        <button onclick="sub()">Submit</button>
     </div>
 {% endblock content %}

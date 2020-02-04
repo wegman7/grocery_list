@@ -6,12 +6,12 @@
     {% endif %}
     <form id="form" method="POST">
         {% csrf_token %}
-        <div class="col-3 pl-0"><input class="form-control" name="username" type="text"/></div>
-        <div class="col-3 pl-0"><input class="form-control" name="password" type="password"/></div>
-        <button class="btn btn-dark" id="submit-login">Log in</button>
+        <div class="col-3 pl-0">Username: <input class="form-control" name="username" type="text"/></div>
+        <div class="col-3 pl-0">Password: <input class="form-control" name="password" type="password"/></div>
+        <button class="mt-2 btn btn-dark" id="submit-login">Log in</button>
         <!-- <fieldset>
             {{ form }}
         </fieldset> -->
     </form>
-    <a href="{% url 'register' %}">Don't have an account? Click here to create an account.</a>
+    <div class="mt-2"><a href="{% url 'register' %}">Don't have an account? Click here to create an account.</a></div>
 {% endblock content %}

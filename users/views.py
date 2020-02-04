@@ -47,7 +47,7 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Account created!")
-            return redirect('home')
+            return redirect('login')
     else:
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
@@ -59,12 +59,9 @@ def list_view(request):
     }
     # if cancel button is pressed on page, page is reloaded
     if request.method == 'POST' and request.POST.get('cancel'):
-        print(request.POST)
-        print('true')
         pass
     # item is added
     elif request.method == 'POST' and request.POST.get('added-text') is not None:
-        print(request.POST)
         new_list_item = request.POST.get('added-text')
         if len(new_list_item) > 0:
             new_list_item = List(item=new_list_item, user=request.user)
@@ -73,7 +70,6 @@ def list_view(request):
             messages.error(request, "Invalid item")
     # item(s) are deleted
     else:
-        print(request.POST)
         delete_list = []
         for item in List.objects.all():
             if request.POST.get(item.item) is not None:
