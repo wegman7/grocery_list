@@ -76,3 +76,10 @@ def list_view(request):
                 delete_list.append(item.item)
                 List.objects.filter(item=item.item).delete()
     return render(request, 'users/list_view.html', context)
+
+@login_required
+def manage_friends(request):
+    context = {
+        'friends': Friend.objects.filter(user=request.user)
+    }
+    return render(request, 'users/manage_friends', context)

@@ -9,3 +9,25 @@ class List(models.Model):
 
     def __str__(self):
         return self.item
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    friends = models.ManyToManyField("Profile", blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+class FriendRequest(models.Model):
+    from_user = models.ForeignKey(Profile, related_name='from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(Profile, related_name='to_user', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "From %s to %s" % (self.from_user.user.username, self.to_user.user.username)
+
+# might be better to recieve friend requests from users instead of profiles
+# class FriendRequest(models.Model):
+#     to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+#     from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return "From %s to %s" % (from_user.username, to_user.username)
