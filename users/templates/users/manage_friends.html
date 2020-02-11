@@ -1,22 +1,44 @@
 {% extends 'users/base.html' %}
 {% block content %}
     <div class="col-sm-6">
-        <h2>Grocery List:</h2>
-        <form id="new-item-form" method="post">
+        <h2>Friends:</h2>
+        <form id="form" method="post">
             {% csrf_token %}
-            {% if items %}
-                <ul id="grocery-list">
-                {% for item in items %}
-                    <li class="list-items">{{ item.item }}</li>
-                {% endfor %}
+            {% if friends %}
+                <ul id="list">
+                    {% for friend in friends %}
+                        <li class="friends-list-items">{{ friend }}</li>
+                    {% endfor %}
                 </ul>
             {% else %}
-                No items
+                No friends
             {% endif %}
         </form>
-        <div id="buttons-div">
-            <button class="btn btn-dark" id="add-text-button">Add item</button>
-            <button class="btn btn-danger" id="delete-items-button">Delete items</button>
-        </div>
+            <div id="buttons-div">
+                <button class="btn btn-dark" id="add-text-button">Add friend</button>
+                {% if friends %}
+                    <button class="btn btn-danger" id="delete-items-button">Delete friend</button>
+                {% endif %}
+            </div>
+        {% if friend_requests %}
+            <h5 class="mt-5">Requests:</h5>
+            <ul id="friend-requests-list">
+                {% for friend_request in friend_requests %}
+                    <li class="friend-requests-list-item">
+                        <span class="request-user">{{ friend_request.from_user }}</span>
+                        <button class="btn btn-dark smaller-text request-button" id="accept-button">Accept</button>
+                        <button class="btn btn-dark smaller-text request-button" id="decline-button">Decline</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if friend_requests_sent %}
+            <h5 class="mt-5">Sent:</h5>
+            <ul id="friend-requests-sent-list">
+                {% for friend_request_sent in friend_requests_sent %}
+                    <li class="friend-requests-list-item">{{ friend_request_sent }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
 {% endblock content %}

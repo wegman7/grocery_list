@@ -66,3 +66,9 @@
     animation-duration: 1.5s;
     animation-fill-mode: forwards;
 }
+
+.smaller-text {
+    /* width: 20px;
+    height: 20px; */
+    font-size: 8px;
+}

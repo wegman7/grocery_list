@@ -2,10 +2,10 @@
 {% block content %}
     <div class="col-sm-6">
         <h2>Grocery List:</h2>
-        <form id="new-item-form" method="post">
+        <form id="form" method="post">
             {% csrf_token %}
             {% if items %}
-                <ul id="grocery-list">
+                <ul id="list">
                 {% for item in items %}
                     <li class="list-items">{{ item.item }}</li>
                 {% endfor %}
