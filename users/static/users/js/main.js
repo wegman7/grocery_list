@@ -66,49 +66,6 @@ function onDOMContentLoaded() {
         addSubmitAndCancel();
     }
 
-    function acceptRequest() {
-        console.log('accepted');
-
-        // let friend_requests_list = document.getElementById('friend-requests-list').getElementsByTagName('li');
-        // let button_clicked = document.getElementsByClassName('request-button');
-        // text = friend_requests_list[0].innerHTML.split(" ")[29];
-        // let delete_friend = 
-    }
-
-    function testFunc() {
-        /* THIS WORKS!!!!!
-        let csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-        console.log(csrf_token);
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'tester', true);
-        xhr.setRequestHeader("X-CSRFToken", csrf_token);
-
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        someStuff = 'param1=val1&param2=val2&param3=val3';
-        xhr.send(someStuff);
-        */
-
-
-
-
-        let request = new XMLHttpRequest();
-        request.open('GET', 'tester', true);
-
-        request.onload = function () {
-            if (this.status == 200) {
-                let stuff = this.responseText;
-                console.log(stuff);
-        //         // let stuff = JSON.parse(this.responseText);
-        //         // console.log(stuff);
-        //         // let users = JSON.parse(this.responseText);
-        //         // console.log(users[0]);
-        //         request.send(stuff);
-            }
-        }
-        request.send();
-    }
-
     // closure that reverses bool value
     function reverseBool() {
         bool = false;
@@ -178,10 +135,5 @@ function onDOMContentLoaded() {
                 }
             }
         }
-    }
-
-    // test button
-    if (document.getElementById('test-button') != null) {
-        document.getElementById('test-button').onclick = testFunc;
     }
 }
