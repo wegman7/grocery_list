@@ -25,7 +25,8 @@
                         <div class="navbar-nav mr-auto"></div>
                         <div class="navbar-nav">
                             {% if user.is_authenticated %}
-                                <a class="nav-item nav-link" href="{% url 'list' %}">My list</a>
+                                <a class="nav-item nav-link" href="{% url 'list' %}">Lists</a>
+                                <a class="nav-item nav-link" href="{% url 'friends' %}">Friends</a>
                             {% endif %}
                             {% if user.is_authenticated %}
                                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
@@ -33,7 +34,6 @@
                                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                                 <a class="nav-item nav-link" href="{% url 'register' %}">Create account</a>
                             {% endif %}
-                            <a class="nav-item nav-link" href="#">test</a>
                         </div>
                     </div>
                 </div>

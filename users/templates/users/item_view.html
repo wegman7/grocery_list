@@ -4,19 +4,19 @@
         <h2>Grocery Lists:</h2>
         <form id="form" method="post">
             {% csrf_token %}
-            {% if lists %}
+            {% if items %}
                 <ul id="list">
-                {% for list in lists %}
-                    <li class="list-items">{{ list }}</li>
+                {% for item in items %}
+                    <li class="list-items">{{ item }}</li>
                 {% endfor %}
                 </ul>
             {% else %}
-                No lists
+                No items
             {% endif %}
         </form>
         <div id="buttons-div">
-            <button class="btn btn-dark" id="add-text-button">Add list</button>
-            <button class="btn btn-danger" id="delete-items-button">Delete lists</button>
+            <button class="btn btn-dark" id="add-text-button">Add item</button>
+            <button class="btn btn-danger" id="delete-items-button">Delete items</button>
         </div>
     </div>
 {% endblock content %}

@@ -67,6 +67,10 @@
     animation-fill-mode: forwards;
 }
 
+.small-text {
+    font-size: 14px;
+}
+
 .smaller-text {
     /* width: 20px;
     height: 20px; */

@@ -7,13 +7,10 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 import json
 
-from .models import List, Profile, FriendRequest
+from .models import List, ListItem, Profile, FriendRequest
 
 def home(request):
-    context = {
-        'items': List.objects.all(),
-    }
-    return render(request, 'users/home.html', context)
+    return render(request, 'users/home.html')
 
 def login_view(request):
     context = {'message': 'Incorrect username or password'}
@@ -44,11 +41,63 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
 
+# def list_item_view(request):
+    
+
 @login_required
 def list_view(request):
+    lists = List.objects.filter(user=request.user)
     context = {
-        'items': List.objects.filter(user=request.user),
+        'lists': lists
     }
+
+    # if cancel button is pressed on page, page is reloaded
+    if request.method == 'POST' and request.POST.get('cancel'):
+        pass
+    # list is added
+    elif request.method == 'POST' and request.POST.get('added-text') is not None:
+        new_list = request.POST.get('added-text')
+        if len(new_list) > 0:
+            new_list = List(list_name=new_list, user=request.user)
+            new_list.save()
+        else:
+            messages.error(request, "Invalid list")
+    # item(s) are deleted
+    elif request.method == 'POST':
+        for list_object in List.objects.all():
+            if request.POST.get(list_object.list_name) is not None:
+                List.objects.filter(list_name=list_object.list_name).delete()
+        return redirect('list')
+    return render(request, 'users/list_view.html', context)
+
+@login_required
+def item_view(request, pk):
+    my_list = List.objects.get(pk=pk)
+    items = ListItem.objects.filter(from_list=my_list)
+    context = {
+        'items': items
+    }
+
+    # if cancel button is pressed on page, page is reloaded
+    if request.method == 'POST' and request.POST.get('cancel'):
+        pass
+    # item is added
+    elif request.method == 'POST' and request.POST.get('added-text') is not None:
+        new_list_item = request.POST.get('added-text')
+        if len(new_list_item) > 0:
+            new_list_item = ListItem(item=new_list_item, from_list=my_list)
+            new_list_item.save()
+        else:
+            messages.error(request, "Invalid item")
+    # item(s) are deleted
+    elif request.method == 'POST':
+        for item in items:
+            if request.POST.get(item.item) is not None:
+                ListItem.objects.filter(item=item.item).delete()
+        return redirect(request.path_info)
+    return render(request, 'users/item_view.html', context)
+
+    """
     # if cancel button is pressed on page, page is reloaded
     if request.method == 'POST' and request.POST.get('cancel'):
         pass
@@ -69,6 +118,7 @@ def list_view(request):
                 delete_list.append(item.item)
                 List.objects.filter(item=item.item).delete()
     return render(request, 'users/list_view.html', context)
+    """
 
 @login_required
 def manage_friends(request):
