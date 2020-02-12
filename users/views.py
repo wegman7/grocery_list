@@ -41,14 +41,20 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
 
-# def list_item_view(request):
-    
-
 @login_required
 def list_view(request):
-    lists = List.objects.filter(user=request.user)
+    profile = Profile.objects.get(user=request.user)
+    friends = profile.friend.filter(friend=profile)
+    print(friends)
+    friends_lists = []
+    for friend in friends:
+        if List.objects.filter(user=friend.user):
+            friends_lists.append(List.objects.get(user=friend.user))
+
+    my_lists = List.objects.filter(user=request.user)
     context = {
-        'lists': lists
+        'my_lists': my_lists,
+        'friends_lists': friends_lists
     }
 
     # if cancel button is pressed on page, page is reloaded
@@ -75,6 +81,7 @@ def item_view(request, pk):
     my_list = List.objects.get(pk=pk)
     items = ListItem.objects.filter(from_list=my_list)
     context = {
+        'my_list': my_list,
         'items': items
     }
 
@@ -97,35 +104,8 @@ def item_view(request, pk):
         return redirect(request.path_info)
     return render(request, 'users/item_view.html', context)
 
-    """
-    # if cancel button is pressed on page, page is reloaded
-    if request.method == 'POST' and request.POST.get('cancel'):
-        pass
-    # item is added
-    elif request.method == 'POST' and request.POST.get('added-text') is not None:
-        new_list_item = request.POST.get('added-text')
-        if len(new_list_item) > 0:
-            new_list_item = List(item=new_list_item, user=request.user)
-            new_list_item.save()
-        else:
-            messages.error(request, "Invalid item")
-    # item(s) are deleted
-    else:
-        print(request.POST)
-        delete_list = []
-        for item in List.objects.all():
-            if request.POST.get(item.item) is not None:
-                delete_list.append(item.item)
-                List.objects.filter(item=item.item).delete()
-    return render(request, 'users/list_view.html', context)
-    """
-
 @login_required
 def manage_friends(request):
-    print('request inside manage_friends: ', request)
-    if request.is_ajax():
-        print("ajax !")
-
     profile = Profile.objects.get(user=request.user)
     friends = profile.friend.filter(friend=profile)
 
@@ -143,20 +123,33 @@ def manage_friends(request):
         pass
     # if friend request is added
     elif request.method == 'POST' and request.POST.get('added-text') is not None:
-        print(request.POST)
         added_text = request.POST.get('added-text')
-        print(len(added_text))
-        if len(added_text) > 0 and len(User.objects.filter(username=added_text)) > 0 and added_text != request.user.username:
-            if len(FriendRequest.objects.filter(from_user=request.user, to_user=User.objects.get(username=added_text))) == 0:
-                new_friend_request = FriendRequest(from_user=request.user, to_user=User.objects.get(username=added_text))
-                new_friend_request.save()
+
+        # make sure username exists
+        if User.objects.filter(username=added_text):
+            user_to_add = User.objects.get(username=added_text)
+            user_to_add_profile = Profile.objects.get(user=user_to_add)
+            # make sure we're not already friends
+            if user_to_add_profile not in friends:
+                # make sure it isn't a request to ourself
+                if added_text != request.user.username:
+                    # test if I've already sent this user a request
+                    if not FriendRequest.objects.filter(from_user=request.user, to_user=user_to_add):
+                        new_friend_request = FriendRequest(from_user=request.user, to_user=user_to_add)
+                        new_friend_request.save()
+                        # add profile to our actual friends list (they won't actually show up on the webpage unless they add us too)
+                        profile.friend.add(Profile.objects.get(user=user_to_add))
+                    else:
+                        messages.error(request, "Request already sent!")
+                else:
+                    messages.error(request, "Cannot send a request to yourself!")
             else:
-                messages.error(request, "Friend request already sent.")
+                messages.error(request, "You're already friends!")
         else:
-            messages.error(request, "Invalid username.")
+            messages.error(request, "Username does not exist.")
+
     # friend(s) are deleted
     elif request.method == 'POST':
-        print(request.POST)
         for friend in friends:
             if request.POST.get(friend.user.username) is not None:
                 profile.friend.remove(friend)
@@ -165,9 +158,6 @@ def manage_friends(request):
     return render(request, 'users/manage_friends.html', context)
 
 def add_friend_request(request):
-    print("request inside add_friend: ", request)
-    print(request.POST)
-
     if request.method == 'POST':
         # grab the username of profile we want to accept
         accept_user = request.POST.get('accept_user')
@@ -176,42 +166,19 @@ def add_friend_request(request):
         # create instance for profile we are accepting
         new_friend_profile = Profile.objects.get(user=User.objects.get(username=accept_user))
 
-        profile.friend.add(new_friend_profile)
-
         # after adding the friend to our profile friends list, we need to delete the request by first creating an instance of it
         friend_request = FriendRequest.objects.get(from_user=User.objects.get(username=accept_user), to_user=request.user)
         friend_request.delete()
 
-        # do this to refresh page
-        print("return redirect goddamnit!")
-        return redirect('/')
-    
-    print("and again return redirect goddamnit!")
-    return redirect('home')
-
-    context = {
-        'users': User.objects.all()
-    }
-    return HttpResponse(context)
+        # add profile to our actual friends list (they won't actually show up on the webpage unless they add us too)
+        profile.friend.add(new_friend_profile)
+    pass
 
 def remove_friend_request(request):
-    print("request inside add_friend: ", request)
-    print(request.POST)
-
     if request.method == 'POST':
         # grab name of user whose request we want to remove
         remove_user = request.POST.get('remove_user')
         # create instance of FriendRequest we want to delete
         friend_request = FriendRequest.objects.get(from_user=User.objects.get(username=remove_user), to_user=request.user)
         friend_request.delete()
-
-        # do this to refresh page
-        print("return redirect goddamnit!")
-        return redirect('home')
-    
-    print("and again return redirect goddamnit!")
-    return redirect('home')
-    context = {
-        'users': User.objects.all()
-    }
-    return HttpResponse(context)
+    pass

@@ -1,22 +1,43 @@
 {% extends 'users/base.html' %}
 {% block content %}
-    <div class="col-sm-6">
-        <h2>Grocery Lists:</h2>
-        <form id="form" method="post">
-            {% csrf_token %}
-            {% if lists %}
-                <ul id="list">
-                {% for list in lists %}
-                    <li class="list-items">{{ list }}</li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                No lists
-            {% endif %}
-        </form>
-        <div id="buttons-div">
-            <button class="btn btn-dark" id="add-text-button">Add list</button>
-            <button class="btn btn-danger" id="delete-items-button">Delete lists</button>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>My grocery lists:</h2>
+            <form id="form" method="post">
+                {% csrf_token %}
+                {% if my_lists %}
+                    <ul id="list">
+                        {% for my_list in my_lists %}
+                            <div class="row mt-1 ml-1">
+                                <li class="list-items">{{ my_list }}</li><a class="btn btn-sm btn-secondary ml-3" href="{% url 'list-items' my_list.id %}">View</a>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    No lists
+                {% endif %}
+            </form>
+            <div id="buttons-div">
+                <button class="btn btn-dark" id="add-text-button">Add list</button>
+                <button class="btn btn-danger" id="delete-items-button">Delete lists</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Friends grocery lists:</h2>
+            <form id="form" method="post">
+                {% csrf_token %}
+                {% if friends_lists %}
+                    <ul id="list">
+                    {% for friends_list in friends_lists %}
+                        <div class="row mt-1 ml-1">
+                            <li class="list-items">{{ friends_list }}</li><a class="btn btn-sm btn-secondary ml-3" href="{% url 'list-items' friends_list.id %}">View</a>
+                        </div>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    No lists
+                {% endif %}
+            </form>
         </div>
     </div>
 {% endblock content %}

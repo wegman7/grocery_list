@@ -24,10 +24,10 @@
             <h5 class="mt-5">Requests:</h5>
             <ul id="friend-requests-list">
                 {% for friend_request in friend_requests %}
-                    <li class="friend-requests-list-item">
+                    <li class="friend-requests-list-item small-text">
                         <span class="request-user">{{ friend_request.from_user }}</span>
-                        <button class="btn btn-dark smaller-text request-button" id="accept-button">Accept</button>
-                        <button class="btn btn-dark smaller-text request-button" id="decline-button">Decline</button>
+                        <button class="btn btn-dark btn-sm request-button" id="accept-button">Accept</button>
+                        <button class="btn btn-danger btn-sm request-button" id="decline-button">Decline</button>
                     </li>
                 {% endfor %}
             </ul>
@@ -36,7 +36,7 @@
             <h5 class="mt-5">Sent:</h5>
             <ul id="friend-requests-sent-list">
                 {% for friend_request_sent in friend_requests_sent %}
-                    <li class="friend-requests-list-item small-text">{{ friend_request_sent }}</li>
+                    <li class="friend-requests-list-item small-text">{{ friend_request_sent.to_user }}</li>
                 {% endfor %}
             </ul>
         {% endif %}

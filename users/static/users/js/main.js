@@ -110,6 +110,7 @@ function onDOMContentLoaded() {
                     data += accept_user;
                     request.send(data);
                     console.log(request);
+                    window.location.href = '/friends/';
                 }
                 else {
                     index = Math.floor(i/2);

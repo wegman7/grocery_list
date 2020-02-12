@@ -3,6 +3,11 @@
     background-color: lightskyblue;
 }
 
+.navbar-nav{
+    float: right!important;
+
+}
+
 .navbar-grid {
     background-color: green;
     display: grid;

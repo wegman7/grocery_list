@@ -23,12 +23,11 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggle">
                         <div class="navbar-nav mr-auto"></div>
+                        <!-- navbar right side-->
                         <div class="navbar-nav">
                             {% if user.is_authenticated %}
                                 <a class="nav-item nav-link" href="{% url 'list' %}">Lists</a>
                                 <a class="nav-item nav-link" href="{% url 'friends' %}">Friends</a>
-                            {% endif %}
-                            {% if user.is_authenticated %}
                                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                             {% else %}
                                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
