@@ -1,0 +1,83 @@
+.blue-background {
+    color: rgba(7, 0, 112, 0.719);
+    background-color: lightskyblue;
+}
+
+.navbar-nav{
+    float: right!important;
+
+}
+
+.navbar-grid {
+    background-color: green;
+    display: grid;
+    padding: 20px;
+    grid-row-gap: 10px;
+    grid-column-gap: 100px;
+    grid-template-columns: 300px auto;
+}
+
+
+.navbar-grid-left {
+    background-color: orange;
+    display: grid;
+    padding: 10px;
+    grid-column-gap: 10px;
+    grid-template-columns: 100px 100px;
+    text-align: center;
+}
+
+.navbar-grid-right {
+    background-color: orange;
+    padding: 10px;
+    text-align: center;
+    justify-self: end;
+}
+
+
+/* .navbar-grid-item {
+    background-color: orange;
+    padding: 10px;
+    text-align: center;
+} */
+
+@keyframes enlarge {
+    from {
+        font-size: 1px;
+    }
+    to {
+        font-size: 50px;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotateZ(0);
+        transform-origin: 50% 50%;
+    }
+    100% {
+        transform: rotateZ(1080deg);
+    }
+}
+
+/* .home-title {
+    animation-name: spin;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+} */
+
+.home-title {
+    animation-name: spin, enlarge;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+
+.small-text {
+    font-size: 14px;
+}
+
+.smaller-text {
+    /* width: 20px;
+    height: 20px; */
+    font-size: 8px;
+}
