@@ -45,11 +45,16 @@ def register(request):
 def list_view(request):
     profile = Profile.objects.get(user=request.user)
     friends = profile.friend.filter(friend=profile)
-    print(friends)
+    # create friends_lists that will contain all our lists we want appended to our webpage
     friends_lists = []
+    # loop through each friend
     for friend in friends:
-        if List.objects.filter(user=friend.user):
-            friends_lists.append(List.objects.get(user=friend.user))
+        # looks at all of that individual friends lists
+        friend_lists = List.objects.filter(user=friend.user)
+        # loop through each of their lists
+        for friend_list in friend_lists:
+            # append that list to all the lists we want appended to webpage
+            friends_lists.append(friend_list)
 
     my_lists = List.objects.filter(user=request.user)
     context = {

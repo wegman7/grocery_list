@@ -25,7 +25,7 @@ SECRET_KEY = '505hps-em04ck64n=s@3m%wp58csld1&exv(l8ax1$*4bbh2uk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.joshwegman.com', 'joshwegman.com', '172.105.154.117']
+ALLOWED_HOSTS = ['www.joshwegman.com', 'joshwegman.com', '172.105.154.117', '127.0.0.1']
 
 
 # Application definition
