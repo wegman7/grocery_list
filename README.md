@@ -1,0 +1,1 @@
+This is a grocery list app that allows users to creat lists, share lists with friends, and edit friend's lists. It works great for people living in the same household. The app also contains responsive design that works great on mobile. You can check it out at joshwegman.com!
